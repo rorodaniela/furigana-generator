@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.rdw-editor-toolbar {
+  display: grid !important;
+  grid-template-columns: repeat(4, auto) !important;
+  gap: 12px !important;
+}
+
+.rdw-editor-toolbar .rdw-option-wrapper {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+}
+
+.rdw-editor-toolbar .rdw-inline-wrapper {
+  display: inline-flex !important;
+  flex-direction: row !important;
+}
