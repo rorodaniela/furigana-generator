@@ -1,25 +1,75 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [text, setText] = useState("");
+	const [tokens, setTokens] = useState([]);
+	const [tokenizer, setTokenizer] = useState(null);
+
+	useEffect(() => {
+		// akses global kuromoji dari window
+		window.kuromoji
+			.builder({
+				dicPath: "https://unpkg.com/kuromoji@0.1.2/dict/",
+			})
+			.build((err, tokenizer) => {
+				if (err) {
+					console.error(err);
+				} else {
+					setTokenizer(tokenizer);
+				}
+			});
+	}, []);
+
+	// helper: katakana → hiragana
+	const kataToHira = (str) =>
+		str.replace(/[\u30a1-\u30f6]/g, (ch) =>
+			String.fromCharCode(ch.charCodeAt(0) - 0x60)
+		);
+
+	const handleTextChange = (e) => {
+		const value = e.target.value;
+		setText(value);
+		if (tokenizer) {
+			const result = tokenizer.tokenize(value);
+			console.log("result", result);
+			setTokens(result);
+		}
+	};
+
+	const renderRuby = () => {
+		console.log("tokesn", tokens);
+
+		return tokens.map((t, i) =>
+			t.reading && t.reading !== t.surface_form ? (
+				<ruby key={i} style={{ marginRight: 4 }}>
+					{t.surface_form}
+					<rt style={{ fontSize: "0.6em" }}>{kataToHira(t.reading)}</rt>
+				</ruby>
+			) : (
+				<span key={i}>{t.surface_form}</span>
+			)
+		);
+	};
+	return (
+		<div style={{ maxWidth: 600, margin: "20px auto", fontFamily: "sans-serif" }}>
+			<h2>Input Jepang dengan Furigana Otomatis</h2>
+			<input
+				value={text}
+				onChange={handleTextChange}
+				placeholder="contoh: 日本語を勉強します"
+				style={{ width: "100%", padding: 8, fontSize: 16 }}
+			/>
+
+			<div style={{ marginTop: 20, fontSize: "1.5rem", lineHeight: 1.8 }}>
+				{text ? (
+					renderRuby()
+				) : (
+					<span style={{ color: "#999" }}>Belum ada input</span>
+				)}
+			</div>
+		</div>
+	);
 }
 
 export default App;
