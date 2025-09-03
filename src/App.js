@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
 import "./App.css";
 
 function App() {
@@ -51,6 +55,25 @@ function App() {
 			)
 		);
 	};
+
+	// TODO: Add SDKs for Firebase products that you want to use
+	// https://firebase.google.com/docs/web/setup#available-libraries
+
+	// Your web app's Firebase configuration
+	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	const firebaseConfig = {
+		apiKey: "AIzaSyAkNUfEbkZmFjZRy3Y_9y1wulrvqpOaOQc",
+		authDomain: "umbrella-project-29.firebaseapp.com",
+		projectId: "umbrella-project-29",
+		storageBucket: "umbrella-project-29.firebasestorage.app",
+		messagingSenderId: "225204036052",
+		appId: "1:225204036052:web:ea7c57d1e9241867b87641",
+		measurementId: "G-1KP1D5WLNT",
+	};
+
+	// Initialize Firebase
+	const app = initializeApp(firebaseConfig);
+	getAnalytics(app);
 	return (
 		<div style={{ maxWidth: 600, margin: "20px auto", fontFamily: "sans-serif" }}>
 			<h2>Input Jepang dengan Furigana Otomatis</h2>
