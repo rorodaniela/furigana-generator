@@ -40,16 +40,20 @@
 .rdw-editor-toolbar {
   display: grid !important;
   grid-template-columns: repeat(4, auto) !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-content: center !important;
   gap: 12px !important;
+  border: 1px solid darkgray !important;
+  padding: 4px !important;
+  cursor: pointer;
 }
 
-.rdw-editor-toolbar .rdw-option-wrapper {
+.rdw-editor-toolbar .rdw-inline-wrapper,
+.rdw-list-wrapper,
+.rdw-history-wrapper,
+.rdw-text-align-wrapper {
   display: inline-flex !important;
   flex-direction: row !important;
   gap: 12px !important;
-}
-
-.rdw-editor-toolbar .rdw-inline-wrapper {
-  display: inline-flex !important;
-  flex-direction: row !important;
 }

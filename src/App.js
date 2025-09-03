@@ -105,7 +105,15 @@ function App() {
 
   return (
     <div
-      style={{ maxWidth: 600, margin: "20px auto", fontFamily: "sans-serif" }}
+      style={{
+        maxWidth: 600,
+        fontFamily: "sans-serif",
+        margin: "auto",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
     >
       <h2>Input Jepang dengan Furigana Otomatis</h2>
 
@@ -113,7 +121,7 @@ function App() {
         value={text}
         onChange={handleTextChange}
         placeholder="contoh: 日本語を勉強します"
-        style={{ width: "100%", padding: 8, fontSize: 16 }}
+        style={{ padding: 8, fontSize: 16 }}
       />
 
       <div style={{ marginTop: 20, fontSize: "1.5rem", lineHeight: 1.8 }}>
@@ -159,15 +167,20 @@ function App() {
         </button>
       </div>
 
-      {previewState && parse(previewState)}
-
-      <div style={{ marginTop: 20, fontSize: "1.5rem", lineHeight: 1.6 }}>
-        {savedTokens ? (
-          parse(savedTokens)
+      <div style={{ marginTop: 20, fontSize: "1.5rem" }}>
+        {previewState ? (
+          parse(previewState)
         ) : (
           <span style={{ color: "#999" }}>Belum ada input</span>
         )}
       </div>
+
+      {savedTokens && (
+        <div style={{ marginTop: 20 }}>
+          <h3>Saved HTML:</h3>
+          {savedTokens}
+        </div>
+      )}
     </div>
   );
 }
